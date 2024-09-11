@@ -218,8 +218,13 @@ def postprocess_text(txt: str, limit: int = 5) -> str:
         words = tokenize(txt)
 
     word_counts = Counter(words)
-    return " ".join([word for word in words if word_counts[word] <= limit])
 
+    for word, count in word_counts.items():
+        if count > limit:
+            # If a word exceeds the limit, return the processed text
+            return " ".join([word for word in words if word_counts[word] <= limit])
+            
+    return txt
 
 from datetime import timedelta
 import os
